@@ -10,7 +10,7 @@ chainstatedata = home + ".bitcon/chainstate"
 blockdata = home + ".bitcoin/blocks"
 index = home + ".bitcoin/index"
 
-s3path = "s3://data/"
+# s3path = "s3://data/"
 # def input_args():
 #     parser = argparse.ArgumentParser(description='Process UTXO set from chainstate and return unspent output per'
 #                                                  ' address for P2PKH and P2SH addresses')
@@ -96,8 +96,8 @@ if __name__ == '__main__':
 
     s3 = s3fs.S3FileSystem(anon=True)
 
-    add_iter = in_mem(args)
-    BUCKET_NAME = "chainstate_data"
+    add_iter = compute()
+    BUCKET_NAME = "utxo-data"
     w = ['address,value_satoshi,last_height']
     with s3.open(f"{BUCKET_NAME}/addr_bal.csv",'w') as f:
         c = 0
