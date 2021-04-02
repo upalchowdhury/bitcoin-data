@@ -1,24 +1,23 @@
 #!/bin/bash
 
-BLOCKSTART=1000
-BLOCKEND=2000
+start_block=1
+end_block=12
 
 
-for ((i=$BLOCKSTART; i<$BLOCKEND;i+=60))
+for ((i=$start_block; i<$end_block;i+=1))
 do
 
-	for ((j=i;j<i+60;j++))
-	do
-		echo "Sending block $j"
+        for ((j=i;j<i+1;j++))
+        do
+                echo "blocks $j"
 
-		BLOCKHEIGHT=$j
+                height=$j
 
-		BLOCKHASH=$(bitcoin-cli getblockhash $BLOCKHEIGHT)
-    echo $BLOCKHASH
+                blockhash=$(bitcoin-cli getblockhash $height)
 
-		FILENAME="block"${j}".json"
+                file="block"${j}".json"
 
-		bitcoin-cli getblock ${BLOCKHASH} 2 | aws s3 cp - s3://blockdata/${FILENAME} &
-	done
-	wait
+                bitcoin-cli  getblock ${blockhash} 2 | aws s3 cp - s3://addr-bal-output/${file} &
+        done
+        wait
 done
