@@ -64,7 +64,7 @@ schema = StructType([
 
 ############# Reading json data and writing as csv file ##############
 
-df = spark.read.json("s3a://blocks-data/*.json", multiLine=True, schema=schema) \
+df = spark.read.json("s3a://addr-bal-output/blocks-data/*.json", multiLine=True, schema=schema) \
            .withColumn("tx", explode("tx")).coalesce(140)
 df = df.select("height", "time")
-df.write.csv("s3a://blocks-data/*.json, header=None, mode="append")
+df.write.csv("s3a://addr-bal-output/normalized-data-from-json/", header=None, mode="append")
