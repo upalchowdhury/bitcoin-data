@@ -19,7 +19,7 @@ def compute():
 
     add_dict = dict()
     for add, val, height in parse_ldb(
-            fin_name='/home/ubuntu/.bitcoin/chainstate',
+            fin_name=chainstatedata,
             version=0.15,
             types={0,1}):
         if add in add_dict:
